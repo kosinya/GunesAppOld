@@ -1,22 +1,16 @@
 from typing import AsyncGenerator
 
 from fastapi import Depends
-from fastapi_users.db import SQLAlchemyBaseUserTable, SQLAlchemyUserDatabase
-from sqlalchemy import Column, Integer, String, MetaData
+from fastapi_users.db import SQLAlchemyUserDatabase
+from auth.model import User
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
 DATABASE_URL = "sqlite+aiosqlite:///./test.db"
-metadata = MetaData()
 
 
 class Base(DeclarativeBase):
     pass
-
-
-class User(SQLAlchemyBaseUserTable[id], Base):
-    id = Column(Integer(), primary_key=True, autoincrement=True)
-    name = Column(String(), nullable=False)
 
 
 engine = create_async_engine(DATABASE_URL)
